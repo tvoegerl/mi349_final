@@ -1,26 +1,17 @@
 <?php
-// Get data from form
-$firstName = $_POST['first-name'];
-$lastName = $_POST['last-name'];
-$email= $_POST['email'];
-$message= $_POST['message'];
+    if (isset($_POST['submit'])) {
+        $firstName = $_POST['first-name'];
+        $lastName = $_POST['last-name'];
+        $mailFrom = $_POST['email'];
+        $message = $_POST['message'];
 
-$to = "voegerlt@msu.edu";
-$subject = "This is the subject line";
+        $mailTo = "voegerlt@msu.edu";
+        $headers = "From: ".$mailFrom;
+        $subject = "New contact form submission";
+        $txt = "You have received an email from ".$firstName." ".$lastName.".\n\n".$message;
 
-// The following text will be sent
-// Name = user entered name
-// Email = user entered email
-// Message = user entered message
-$txt ="Name = ". $firstName . $lastName . "\r\n Email = "
-	. $email . "\r\n Message =" . $message;
+        mail($mailTo, $subject, $txt, $headers);
 
-$headers = "From: noreply@demosite.com" . "\r\n" .
-			"CC: somebodyelse@example.com";
-if($email != NULL) {
-	mail($to, $subject, $txt, $headers);
-}
-
-// Redirect to
-header("Location:index.html");
+        header("Location: index.html?mailsent");
+    }
 ?>
